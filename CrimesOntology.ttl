@@ -1,0 +1,204 @@
+@prefix ex: <https://github.com/MartinKugler97/SW_LD_KG/CrimesOntology#> .
+@prefix res: <https://github.com/MartinKugler97/SW_LD_KG/resource/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix qb: <http://purl.org/linked-data/cube#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix schema: <http://schema.org/> .
+
+
+
+# ONTOLOGY METADATA: 
+
+ex:CrimesOntology a owl:Ontology ;
+  dcterms:title "Ontología para Criminalidad provincial + Empleabilidad en España"@es, "Ontology for Provincial Criminality + Employability in Spain"@en ;
+  dcterms:creator "Juan Carlos Cintas, Raúl Fernández, Martín Kugler, Aibo Ni, Andrew Villamar" ;
+  dcterms:issued "2025-11-27"^^xsd:date ;
+  dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+  rdfs:comment "Ontología para modelar observaciones de criminalidad y empleabilidad por provincia y año, reutilizando SKOS y RDF Data Cube."@es, "Ontology to model observations of crime and employability by province and year, reusing SKOS and RDF Data Cube."@en .
+
+
+
+# MAIN CLASSES: 
+
+ex:Province a owl:Class ;
+  rdfs:label "Province"@en, "Provincia"@es ;
+  rdfs:comment "Unidad administrativa provincial."@es, "Provincial administrative unit."@en .
+
+ex:AutonomousCommunity a owl:Class ;
+  rdfs:label "Autonomous Community"@en, "Comunidad Autónoma"@es ;
+  rdfs:comment "Unidad administrativa superior a la provincia."@es, "Administrative unit superior to the province."@en .
+
+ex:Indicator a owl:Class ;
+  rdfs:label "Indicator"@en, "Indicador"@es ;
+  rdfs:comment "Concepto que define una métrica estadística (ej: tasa de paro, tasa de delitos...)."@es, "Concept that defines a statistical metric (e.g., unemployment rate, crime rate...)."@en ;
+  rdfs:subClassOf skos:Concept .
+
+ex:Observation a owl:Class ;
+  rdfs:label "Observation"@en, "Observación estadística"@es ;
+  rdfs:comment "Representa un valor medido para (province, year, indicator)."@es, "It represents a measured value for (province, year, indicator)."@en ;
+  rdfs:subClassOf qb:Observation .
+
+ex:CrimeObservation a owl:Class ;
+  rdfs:label "CrimeObservation"@en, "Observación de criminalidad"@es ;
+  rdfs:subClassOf ex:Observation ;
+  rdfs:comment "Observación originada en el dataset de criminalidad."@es, "Observation originating from the crime dataset."@en .
+
+ex:EmploymentObservation a owl:Class ;
+  rdfs:label "EmploymentObservation"@en, "Observación de empleo"@es ;
+  rdfs:subClassOf ex:Observation ;
+  rdfs:comment "Observación originada en el dataset de empleabilidad."@es, "Observation originating from the employment dataset."@en .
+
+
+## Concept scheme of indicators using SKOS: 
+
+ex:IndicatorsScheme a skos:ConceptScheme ;
+  skos:prefLabel "Esquema de indicadores (criminalidad y empleo)."@es, "Indicator scheme (crime and employment)."@en .
+
+
+### Crimes indicators conforming the previous concept scheme: 
+
+ex:sexualAssaultPenetration a skos:Concept ;
+    skos:prefLabel "Agresiones sexuales con penetración"@es, "Sexual assaults with penetration"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:cybercrime a skos:Concept ;
+    skos:prefLabel "Cibercriminalidad"@es, "Cybercrime"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:conventionalCrime a skos:Concept ;
+    skos:prefLabel "Criminalidad convencional"@es, "Conventional crime"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:crimesAgainstSexualFreedom a skos:Concept ;
+    skos:prefLabel "Delitos contra la libertad sexual"@es, "Crimes against sexual freedom"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:seriousLessSeriousCrimes a skos:Concept ;
+    skos:prefLabel "Delitos graves y menos graves"@es, "Serious and less serious crimes"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:minorOffenses a skos:Concept ;
+    skos:prefLabel "Delitos leves"@es, "Minor offenses"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:thefts a skos:Concept ;
+    skos:prefLabel "Hurtos"@es, "Thefts"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:intentionalHomicidesMurders a skos:Concept ;
+    skos:prefLabel "Homicidios dolosos y asesinatos consumados"@es, "Completed intentional homicides and murders"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:attemptedIntentionalHomicidesMurders a skos:Concept ;
+    skos:prefLabel "Homicidios dolosos y asesinatos en tentativa"@es, "Attempted intentional homicides and murders"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:otherPropertyCrimes a skos:Concept ;
+    skos:prefLabel "Resto de delitos contra el patrimonio"@es, "Other property crimes"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:robberiesForce a skos:Concept ;
+    skos:prefLabel "Robos con fuerza"@es, "Robberies with force"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:robberiesViolenceIntimidation a skos:Concept ;
+    skos:prefLabel "Robos con violencia e intimidación"@es, "Robberies with violence or intimidation"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:kidnappings a skos:Concept ;
+    skos:prefLabel "Secuestros"@es, "Kidnappings"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:motorVehicleTheft a skos:Concept ;
+    skos:prefLabel "Sustracción de vehículos"@es, "Motor vehicle theft"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:drugTrafficking a skos:Concept ;
+    skos:prefLabel "Tráfico de drogas"@es, "Drug trafficking"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+
+### Employment indicators conforming the previous concept scheme: 
+
+ex:activityRate a skos:Concept ;
+    skos:prefLabel "Tasa de actividad de la población"@es, "Population activity rate"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:employmentRate a skos:Concept ;
+    skos:prefLabel "Tasa de empleo de la población"@es, "Population employment rate"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:unemploymentRate a skos:Concept ;
+    skos:prefLabel "Tasa de paro de la población"@es, "Population unemployment rate"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+ex:schoolDropoutRate a skos:Concept ;
+    skos:prefLabel "Abandono educativo temprano"@es, "Early school dropout rate"@en ;
+    skos:inScheme ex:IndicatorsScheme .
+
+
+
+# PROPERTIES: 
+
+## Object properties: 
+
+ex:observedIn a owl:ObjectProperty ;
+  rdfs:label "observedIn"@en, "observadoEn"@es ;
+  rdfs:domain ex:Observation ;
+  rdfs:range ex:Province ;
+  rdfs:comment "Vincula una observación con la provincia donde se mide."@es, "Links an observation to the province where it is measured."@en .
+
+ex:hasIndicator a owl:ObjectProperty ;
+  rdfs:label "hasIndicator"@en, "tieneIndicador"@es ;
+  rdfs:domain ex:Observation ;
+  rdfs:range ex:Indicator ;
+  rdfs:comment "Indica qué indicador mide la observación."@es, "Indicates which indicator measures the observation."@en .
+
+ex:belongsTo a owl:ObjectProperty ;
+  rdfs:label "belongsTo"@en, "perteneceA"@es ;
+  rdfs:domain ex:Province ;
+  rdfs:range ex:AutonomousCommunity ;
+  rdfs:comment "Provincia pertenece a Comunidad Autónoma."@es, "The province belongs to an Autonomous Community."@en .
+
+ex:partOfDataset a owl:ObjectProperty ;
+  rdfs:label "partOfDataset"@en, "parteDelDataset"@es ;
+  rdfs:domain ex:Observation ;
+  rdfs:range qb:DataSet ;
+  rdfs:comment "Relaciona la observación con el dataset origen (criminalidad/empleo)."@es, "Relates the observation to the source dataset (crime/employment)."@en .
+
+## Data properties: 
+
+ex:value a owl:DatatypeProperty ;
+  rdfs:label "value"@en, "valor"@es ;
+  rdfs:domain ex:Observation ;
+  rdfs:range xsd:decimal ;
+  rdfs:comment "Valor numérico (tasa, conteo...) de la observación."@es, "Numerical value (rate, count...) of the observation."@en .
+
+ex:year a owl:DatatypeProperty ;
+  rdfs:label "year"@en, "año"@es ;
+  rdfs:domain ex:Observation ;
+  rdfs:range xsd:gYear ;
+  rdfs:comment "Año de la observación."@es, "Year of the observation"@en .
+
+ex:provinceCode a owl:DatatypeProperty ;
+  rdfs:label "provinceCode"@en, "códigoProvincia"@es ;
+  rdfs:domain ex:Province ;
+  rdfs:range xsd:string ;
+  rdfs:comment "Código oficial de la provincia."@es, "Official code of the province"@en .
+
+
+# Data Cube (qb) dataset definitions:
+
+ex:crimeDataset a qb:DataSet ;
+  dcterms:title "Dataset de criminalidad provincial"@es, "Crime Dataset"@en ;
+  dcterms:publisher "..." .
+
+ex:employmentDataset a qb:DataSet ;
+  dcterms:title "Dataset de empleabilidad provincial"@es, "Employment Dataset"@en ;
+  dcterms:publisher "..." .
