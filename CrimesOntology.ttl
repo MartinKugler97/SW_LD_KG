@@ -1,6 +1,5 @@
-@prefix ex: <https://github.com/MartinKugler97/SW_LD_KG/CrimesOntology#> .
-@prefix res: <https://github.com/MartinKugler97/SW_LD_KG/resource/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix ex: <https://raw.githubusercontent.com/MartinKugler97/SW_LD_KG/main/ontology.ttl#> .
+@prefix res: <https://raw.githubusercontent.com/MartinKugler97/SW_LD_KG/main/resource.ttl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix qb: <http://purl.org/linked-data/cube#> .
@@ -8,8 +7,6 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix schema: <http://schema.org/> .
 
 
 
